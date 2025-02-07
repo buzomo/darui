@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c" rel="stylesheet">
+    <title>風のささやき</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: "M PLUS Rounded 1c", sans-serif;
+        }
+        .advice {
+            white-space: pre-wrap;
+            max-width: 1000px;
+            font-size: 2.5em;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            color: #451db1;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="advice" id="advice"></div>
+
+    <script>
+        function calculateTransitionDuration(text) {
+            const baseDuration = 5000;
+            const additionalDurationPerCharacter = 150;
+            return baseDuration + (text.length * additionalDurationPerCharacter);
+        }
+
+        const advices = [
+        // 超シンプル行動系
+        "窓を開けて   深呼吸 気分リセット",
+        "水を一口   喉を潤す",
+        "座ってる場所の   ゴミを拾う 小さな整理",
+        "カーテンを少し開けて   光を入れる",
+        "靴下を   片方だけ履き替える",
+        "タオルを   一枚だけ畳む",
+        "スマホの画面を   ちょっときれいに",
+        "布団で   深呼吸 3回",
+        "本のページを   ランダムに開く",
+        "自分の手を   ぼんやり眺める"
+        ];
+
+        let lastAdviceIndex = -1;
+        let currentInterval;
+
+        function getRandomAdvice() {
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * advices.length);
+            } while (randomIndex === lastAdviceIndex);
+            lastAdviceIndex = randomIndex;
+            return advices[randomIndex];
+        }
+
+        function updateAdvice() {
+            const adviceElement = document.getElementById('advice');
+            const newAdvice = getRandomAdvice();
+            const duration = calculateTransitionDuration(newAdvice);
+            
+            if (currentInterval) {
+                clearInterval(currentInterval);
+            }
+            currentInterval = setInterval(updateAdvice, duration);
+
+            adviceElement.innerText = newAdvice;
+        }
+
+        // 初回表示
+        updateAdvice();
+    </script>
+</body>
+</html>
